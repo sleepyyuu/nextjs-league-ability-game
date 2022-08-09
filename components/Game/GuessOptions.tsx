@@ -1,6 +1,4 @@
 import Image from "next/image";
-import { abort } from "process";
-import { useEffect } from "react";
 import uniqid from "uniqid";
 import styles from "../../styles/GuessOptions.module.scss";
 
@@ -15,7 +13,6 @@ export default function GuessOptions(props) {
       }
     }
     if (ability.selected === true || emptyAnswerSlots === 0) {
-      console.log("test");
       return;
     } else {
       let copyAbilityOptionsArray = [...abilityOptions];

@@ -7,8 +7,20 @@ export default function Game() {
   const [selectedChampion, setSelectedChampion] = useState({ name: "" });
   const [selectedChampionAbilities, setSelectedChampionAbilities] = useState([]);
   const [abilityOptions, setAbilityOptions] = useState([]);
-  const [currentGuessRow, setCurrentGuessRow] = useState([{}, {}, {}, {}, {}]);
+  const [currentGuessRow, setCurrentGuessRow] = useState([{ name: "" }, { name: "" }, { name: "" }, { name: "" }, { name: "" }]);
   const [guessNumber, setGuessNumber] = useState(0);
+  const [getAnswer, setGetAnswer] = useState(false);
+  const [results, setResults] = useState("");
+
+  const checkAnswer = () => {
+    setGetAnswer(true);
+    for (let i = 0; i < 5; i++) {
+      if (selectedChampionAbilities[i].name !== currentGuessRow[i].name) {
+        return false;
+      }
+    }
+    return true;
+  };
 
   useEffect(() => {
     const championArray = Object.keys(championListData.data);
@@ -67,6 +79,18 @@ export default function Game() {
         currentGuessRow={currentGuessRow}
         setCurrentGuessRow={setCurrentGuessRow}
       ></GuessBox>
+      {getAnswer ? <div>verdict is {results}</div> : null}
+      <button
+        onClick={() => {
+          if (checkAnswer()) {
+            setResults("Correct!");
+          } else {
+            setResults("Wrong!");
+          }
+        }}
+      >
+        check answer
+      </button>
       <GuessOptions
         abilityOptions={abilityOptions}
         setAbilityOptions={setAbilityOptions}
