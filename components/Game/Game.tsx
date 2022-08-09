@@ -7,7 +7,7 @@ export default function Game() {
   const [selectedChampion, setSelectedChampion] = useState({ name: "" });
   const [selectedChampionAbilities, setSelectedChampionAbilities] = useState([]);
   const [abilityOptions, setAbilityOptions] = useState([]);
-  const [currentGuessRow, setCurrentGuessRow] = useState([]);
+  const [currentGuessRow, setCurrentGuessRow] = useState([{}, {}, {}, {}, {}]);
   const [guessNumber, setGuessNumber] = useState(0);
 
   useEffect(() => {
@@ -56,15 +56,20 @@ export default function Game() {
       }
     };
     shuffleArray(abilityOptionsArray);
-    setAbilityOptions(abilityOptionsArray);
+    setAbilityOptions([abilityOptionsArray.slice(0, 5), abilityOptionsArray.slice(5, 10), abilityOptionsArray.slice(10, 15)]);
   }, []);
-  console.log(selectedChampion.name);
   return (
     <div>
       <div>Selected champion is {selectedChampion ? selectedChampion.name : ""}</div>
-      <GuessBox currentGuessRow={currentGuessRow} setCurrentGuessRow={setCurrentGuessRow}></GuessBox>
+      <GuessBox
+        abilityOptions={abilityOptions}
+        setAbilityOptions={setAbilityOptions}
+        currentGuessRow={currentGuessRow}
+        setCurrentGuessRow={setCurrentGuessRow}
+      ></GuessBox>
       <GuessOptions
         abilityOptions={abilityOptions}
+        setAbilityOptions={setAbilityOptions}
         currentGuessRow={currentGuessRow}
         setCurrentGuessRow={setCurrentGuessRow}
       ></GuessOptions>
